@@ -1,61 +1,66 @@
-const ProductoAMMA = require('./models/productoAMMA');
+// Obtener todos los productos
+const ProductoAMMA = require('../models/productoAMMA'); // Asegúrate de que la ruta al modelo sea correcta
 
-// Obtener todos los productosAMMA
-exports.getAllProductosAMMA = async(req, res) => {
+exports.getAllProducts = async(req, res) => {
     try {
-        const productosAMMA = await ProductoAMMA.find();
-        res.json(productosAMMA);
+        const productos = await ProductoAMMA.find();
+        res.json(productos);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener los productosAMMA' });
+        console.error('Error al obtener los productos:', error);
+        res.status(500).json({ error: 'Error al obtener los productos' });
     }
 };
 
-// Obtener un productoAMMA por su ID
-exports.getProductoAMMAById = async(req, res) => {
+// Obtener un producto por ID
+exports.getProductById = async(req, res) => {
     try {
-        const productoAMMA = await ProductoAMMA.findById(req.params.id);
-        if (!productoAMMA) {
-            return res.status(404).json({ error: 'ProductoAMMA no encontrado' });
+        const producto = await ProductoAMMA.findById(req.params.id);
+        if (!producto) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
         }
-        res.json(productoAMMA);
+        res.json(producto);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener el productoAMMA' });
+        console.error('Error al obtener el producto:', error);
+        res.status(500).json({ error: 'Error al obtener el producto' });
     }
 };
 
-// Crear un nuevo productoAMMA
-exports.createProductoAMMA = async(req, res) => {
+// Crear un nuevo producto
+exports.createProduct = async(req, res) => {
     try {
-        const newProductoAMMA = new ProductoAMMA(req.body);
-        const savedProductoAMMA = await newProductoAMMA.save();
-        res.status(201).json(savedProductoAMMA);
+        const nuevoProducto = new ProductoAMMA(req.body);
+        const producto = await nuevoProducto.save();
+        res.status(201).json(producto);
     } catch (error) {
-        res.status(500).json({ error: 'Error al crear el productoAMMA' });
+        console.error('Error al crear el producto:', error);
+        res.status(500).json({ error: 'Error al crear el producto' });
     }
 };
 
-// Actualizar un productoAMMA
-exports.updateProductoAMMA = async(req, res) => {
+// Actualizar un producto existente
+exports.updateProduct = async(req, res) => {
     try {
-        const updatedProductoAMMA = await ProductoAMMA.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!updatedProductoAMMA) {
-            return res.status(404).json({ error: 'ProductoAMMA no encontrado' });
+        const producto = await ProductoAMMA.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!producto) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
         }
-        res.json(updatedProductoAMMA);
+        res.json(producto);
     } catch (error) {
-        res.status(500).json({ error: 'Error al actualizar el productoAMMA' });
+        console.error('Error al actualizar el producto:', error);
+        res.status(500).json({ error: 'Error al actualizar el producto' });
     }
 };
 
-// Eliminar un productoAMMA existente
-exports.deleteProductoAMMA = async(req, res) => {
+// Eliminar un producto existente
+exports.deleteProduct = async(req, res) => {
     try {
-        const deletedProductoAMMA = await ProductoAMMA.findByIdAndRemove(req.params.id);
-        if (!deletedProductoAMMA) {
-            return res.status(404).json({ error: 'ProductoAMMA no encontrado' });
+        const producto = await ProductoAMMA.findByIdAndDelete(req.params.id);
+        if (!producto) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
         }
-        res.json({ message: 'ProductoAMMA eliminado correctamente' });
+        res.json({ message: 'Producto eliminado correctamente' });
     } catch (error) {
-        res.status(500).json({ error: 'Error al eliminar el productoAMMA' });
+        console.error('Error al eliminar el producto:', error);
+        res.status(500).json({ error: 'Error al eliminar el producto' });
     }
 };
