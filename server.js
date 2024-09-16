@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Algo salió mal.');
 });
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
+
+app.listen(3000, '0.0.0.0', () => {
+    console.log('Server is running on port 3000');
 });
